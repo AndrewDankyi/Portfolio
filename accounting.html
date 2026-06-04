@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accounting & Bookkeeping Dashboard — Andrew Dankyi Twum</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0f4f2;padding:16px;color:#1a1a1a;}
+.db{background:#f0f4f2;max-width:1100px;margin:0 auto;}
+.hdr{background:linear-gradient(135deg,#0F3D2E 0%,#1D6B4F 100%);border-radius:10px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.hdr-left .title{color:#fff;font-size:16px;font-weight:600;}
+.hdr-left .sub{color:rgba(255,255,255,0.55);font-size:10px;margin-top:2px;}
+.hdr-right{display:flex;gap:8px;align-items:center;}
+.hdr-right select{background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:5px 12px;font-size:11px;cursor:pointer;outline:none;}
+.hdr-right select option{background:#0F3D2E;}
+.badge{background:rgba(255,255,255,0.15);color:#fff;font-size:9px;padding:3px 10px;border-radius:4px;letter-spacing:0.07em;font-weight:600;}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;}
+.met{background:#fff;border-radius:10px;border:1px solid #e2ede8;padding:12px 14px;}
+.met-lbl{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;font-weight:600;}
+.met-val{font-size:20px;font-weight:600;color:#1a1a1a;}
+.met-sub{font-size:9px;margin-top:3px;}
+.g{color:#1D9E75;} .r{color:#C0392B;} .a{color:#BA7517;} .b{color:#185FA5;}
+.row{display:grid;gap:10px;margin-bottom:10px;}
+.r2{grid-template-columns:1fr 1fr;}
+.r3{grid-template-columns:1.4fr 1fr 1fr;}
+.card{background:#fff;border-radius:10px;border:1px solid #e2ede8;padding:14px 16px;}
+.ctitle{font-size:9px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.ctitle span{font-size:9px;color:#666;font-weight:400;}
+.aging-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.aging-lbl{font-size:10px;color:#666;width:78px;flex-shrink:0;text-align:right;}
+.aging-track{flex:1;background:#f0f4f2;border-radius:4px;height:18px;overflow:hidden;}
+.aging-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:7px;font-size:9px;color:#fff;font-weight:600;transition:width 0.7s ease;}
+.aging-amt{font-size:10px;font-weight:600;width:52px;text-align:right;flex-shrink:0;}
+.recon-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0f4f2;}
+.recon-item:last-child{border-bottom:none;}
+.recon-lbl{font-size:10px;color:#666;}
+.recon-val{font-size:11px;font-weight:600;color:#1a1a1a;}
+.recon-status{font-size:9px;padding:2px 8px;border-radius:8px;font-weight:600;}
+.s-match{background:#EAF3DE;color:#3B6D11;}
+.s-diff{background:#FCEBEB;color:#A32D2D;}
+.tbl{width:100%;border-collapse:collapse;font-size:10px;}
+.tbl th{color:#888;font-weight:700;font-size:9px;text-align:left;padding:5px 7px;border-bottom:1px solid #f0f4f2;text-transform:uppercase;letter-spacing:0.05em;}
+.tbl td{padding:6px 7px;border-bottom:1px solid #f0f4f2;color:#1a1a1a;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:#f8fbf9;}
+.pill{display:inline-block;padding:1px 7px;border-radius:8px;font-size:8px;font-weight:700;}
+.p-g{background:#EAF3DE;color:#3B6D11;}
+.p-r{background:#FCEBEB;color:#A32D2D;}
+.p-a{background:#FAEEDA;color:#854F0B;}
+.p-b{background:#E6F1FB;color:#185FA5;}
+.donut-legend{display:flex;flex-direction:column;gap:5px;margin-top:8px;}
+.dl{display:flex;align-items:center;justify-content:space-between;font-size:10px;}
+.dl-left{display:flex;align-items:center;gap:6px;color:#666;}
+.dl-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.dl-val{font-weight:600;color:#1a1a1a;}
+.summary-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f4f2;font-size:10px;}
+.summary-row:last-child{border-bottom:none;padding-top:8px;}
+.summary-row.total .summary-lbl,.summary-row.total .summary-val{font-weight:700;font-size:11px;}
+.summary-lbl{color:#666;}
+.summary-val{color:#1a1a1a;}
+.footer{display:flex;justify-content:space-between;font-size:9px;color:#999;padding-top:10px;border-top:1px solid #e2ede8;margin-top:4px;}
+@media(max-width:750px){.metrics{grid-template-columns:repeat(2,1fr);}.r3,.r2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="db">
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="title">Accounting &amp; Bookkeeping Dashboard</div>
+      <div class="sub">General Ledger &nbsp;·&nbsp; AR &nbsp;·&nbsp; AP &nbsp;·&nbsp; Bank Reconciliation &nbsp;·&nbsp; Cash Flow &nbsp;·&nbsp; Built by Andrew Dankyi Twum</div>
+    </div>
+    <div class="hdr-right">
+      <select id="periodSel" onchange="update()">
+        <option value="jun">June 2026</option>
+        <option value="may">May 2026</option>
+        <option value="apr">April 2026</option>
+      </select>
+      <div class="badge">LIVE LEDGER</div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="met"><div class="met-lbl">Cash Balance</div><div class="met-val" id="mCash">$284,620</div><div class="met-sub g" id="mCashD">▲ +$18,340 MTD</div></div>
+    <div class="met"><div class="met-lbl">Accounts Receivable</div><div class="met-val" id="mAR">$142,880</div><div class="met-sub a" id="mARD">38 open invoices</div></div>
+    <div class="met"><div class="met-lbl">Accounts Payable</div><div class="met-val" id="mAP">$67,340</div><div class="met-sub r" id="mAPD">14 bills due</div></div>
+    <div class="met"><div class="met-lbl">Net Income (MTD)</div><div class="met-val" id="mNI">$52,140</div><div class="met-sub g" id="mNID">▲ +11.2% vs prior mo.</div></div>
+    <div class="met"><div class="met-lbl">Recon. Status</div><div class="met-val b" id="mRecon">3 of 4</div><div class="met-sub a" id="mReconD">1 variance flagged</div></div>
+  </div>
+
+  <div class="row r3">
+    <div class="card">
+      <div class="ctitle">Income vs Expenses — 6 Month Trend</div>
+      <div style="position:relative;height:160px;"><canvas id="trendChart"></canvas></div>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:10px;color:#666;">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#0F3D2E;display:inline-block;"></span>Income</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#C0392B;display:inline-block;"></span>Expenses</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75;display:inline-block;"></span>Net Income</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ctitle">Cash Flow Summary</div>
+      <div class="summary-row"><div class="summary-lbl">Operating inflows</div><div class="summary-val g" id="cfOI">+$198,450</div></div>
+      <div class="summary-row"><div class="summary-lbl">Operating outflows</div><div class="summary-val r">-$146,310</div></div>
+      <div class="summary-row"><div class="summary-lbl">Net operating CF</div><div class="summary-val g">+$52,140</div></div>
+      <div class="summary-row"><div class="summary-lbl">Capital expenditures</div><div class="summary-val r">-$12,800</div></div>
+      <div class="summary-row"><div class="summary-lbl">Financing activities</div><div class="summary-val">$0</div></div>
+      <div class="summary-row total"><div class="summary-lbl">Net cash change</div><div class="summary-val g">+$39,340</div></div>
+    </div>
+    <div class="card">
+      <div class="ctitle">Expense Breakdown</div>
+      <div style="position:relative;height:120px;"><canvas id="expDonut"></canvas></div>
+      <div class="donut-legend">
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#0F3D2E;"></div>Payroll</div><div class="dl-val">44% · $64,497</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#1D9E75;"></div>Vendor Payables</div><div class="dl-val">22% · $32,228</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#5DCAA5;"></div>Rent &amp; Utilities</div><div class="dl-val">14% · $20,483</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#9FE1CB;"></div>Software</div><div class="dl-val">11% · $16,094</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#c8ead8;"></div>Other</div><div class="dl-val">9% · $13,008</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row r2">
+    <div class="card">
+      <div class="ctitle">Accounts Receivable Aging <span>Total: $142,880</span></div>
+      <div class="aging-row"><div class="aging-lbl">Current (0–30)</div><div class="aging-track"><div class="aging-fill" style="width:62%;background:#1D9E75;">$88,586</div></div><div class="aging-amt g">62%</div></div>
+      <div class="aging-row"><div class="aging-lbl">31–60 days</div><div class="aging-track"><div class="aging-fill" style="width:21%;background:#BA7517;">$30,005</div></div><div class="aging-amt a">21%</div></div>
+      <div class="aging-row"><div class="aging-lbl">61–90 days</div><div class="aging-track"><div class="aging-fill" style="width:11%;background:#E07B39;">$15,717</div></div><div class="aging-amt a">11%</div></div>
+      <div class="aging-row"><div class="aging-lbl">90+ days</div><div class="aging-track"><div class="aging-fill" style="width:6%;background:#C0392B;">$8,573</div></div><div class="aging-amt r">6%</div></div>
+      <div style="margin-top:12px;">
+        <div class="ctitle" style="margin-bottom:6px;">Top Outstanding Invoices</div>
+        <table class="tbl">
+          <thead><tr><th>Client</th><th>Invoice #</th><th>Amount</th><th>Due Date</th><th>Age</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Meridian Corp</td><td>INV-2241</td><td>$24,800</td><td>Jun 15</td><td>12 days</td><td><span class="pill p-g">Current</span></td></tr>
+            <tr><td>Atlas Holdings</td><td>INV-2198</td><td>$18,350</td><td>May 28</td><td>44 days</td><td><span class="pill p-a">Overdue</span></td></tr>
+            <tr><td>Vertex Solutions</td><td>INV-2176</td><td>$12,400</td><td>May 10</td><td>62 days</td><td><span class="pill p-a">Late</span></td></tr>
+            <tr><td>Pinnacle Group</td><td>INV-2130</td><td>$8,573</td><td>Apr 2</td><td>91 days</td><td><span class="pill p-r">Critical</span></td></tr>
+            <tr><td>Crestwood LLC</td><td>INV-2255</td><td>$7,200</td><td>Jun 22</td><td>5 days</td><td><span class="pill p-g">Current</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">Accounts Payable Aging <span>Total: $67,340</span></div>
+      <div class="aging-row"><div class="aging-lbl">Current (0–30)</div><div class="aging-track"><div class="aging-fill" style="width:71%;background:#1D9E75;">$47,811</div></div><div class="aging-amt g">71%</div></div>
+      <div class="aging-row"><div class="aging-lbl">31–60 days</div><div class="aging-track"><div class="aging-fill" style="width:19%;background:#BA7517;">$12,795</div></div><div class="aging-amt a">19%</div></div>
+      <div class="aging-row"><div class="aging-lbl">61+ days</div><div class="aging-track"><div class="aging-fill" style="width:10%;background:#C0392B;">$6,734</div></div><div class="aging-amt r">10%</div></div>
+      <div style="margin-top:14px;">
+        <div class="ctitle" style="margin-bottom:6px;">Bank Reconciliation Status</div>
+        <div class="recon-item"><div class="recon-lbl">Operating Account · Chase</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val">$284,620</div><div class="recon-status s-match">Matched</div></div></div>
+        <div class="recon-item"><div class="recon-lbl">Payroll Account · Wells Fargo</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val">$48,200</div><div class="recon-status s-match">Matched</div></div></div>
+        <div class="recon-item"><div class="recon-lbl">Savings · Bank of America</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val">$120,000</div><div class="recon-status s-match">Matched</div></div></div>
+        <div class="recon-item"><div class="recon-lbl">Petty Cash · Regions Bank</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val r">$2,340 ≠ $2,190</div><div class="recon-status s-diff">$150 variance</div></div></div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="ctitle" style="margin-bottom:6px;">Bills Due This Week</div>
+        <table class="tbl">
+          <thead><tr><th>Vendor</th><th>Amount</th><th>Due</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>AWS Cloud Services</td><td>$4,280</td><td>Jun 5</td><td><span class="pill p-r">Overdue</span></td></tr>
+            <tr><td>Office Lease — Main</td><td>$8,500</td><td>Jun 7</td><td><span class="pill p-a">Due Soon</span></td></tr>
+            <tr><td>Salesforce License</td><td>$2,100</td><td>Jun 10</td><td><span class="pill p-b">Scheduled</span></td></tr>
+            <tr><td>IT Support Vendor</td><td>$3,600</td><td>Jun 12</td><td><span class="pill p-b">Scheduled</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>&#128202; Built by Andrew Dankyi Twum &nbsp;·&nbsp; Accounting &amp; Bookkeeping Portfolio &nbsp;·&nbsp; dankyit@gmail.com</span>
+    <span>General Ledger · AR/AP Aging · Bank Reconciliation · Cash Flow Analysis · June 2026</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const PERIODS={
+  jun:{cash:'$284,620',ar:'$142,880',ap:'$67,340',ni:'$52,140',recon:'3 of 4',cashD:'▲ +$18,340 MTD',arD:'38 open invoices',apD:'14 bills due',niD:'▲ +11.2% vs prior mo.',reconD:'1 variance flagged',income:[148000,155000,162000,170000,182000,198450],expenses:[112000,118000,121000,128000,138000,146310],net:[36000,37000,41000,42000,44000,52140],months:['Jan','Feb','Mar','Apr','May','Jun']},
+  may:{cash:'$266,280',ar:'$128,440',ap:'$71,200',ni:'$46,920',recon:'4 of 4',cashD:'▲ +$14,620 MTD',arD:'34 open invoices',apD:'16 bills due',niD:'▲ +8.4% vs prior mo.',reconD:'All accounts matched',income:[135000,142000,148000,155000,162000,182000],expenses:[104000,109000,112000,118000,121000,138000],net:[31000,33000,36000,37000,41000,44000],months:['Dec','Jan','Feb','Mar','Apr','May']},
+  apr:{cash:'$251,660',ar:'$118,200',ap:'$63,800',ni:'$43,290',recon:'3 of 4',cashD:'▲ +$11,880 MTD',arD:'31 open invoices',apD:'12 bills due',niD:'▲ +5.9% vs prior mo.',reconD:'1 variance flagged',income:[128000,132000,135000,142000,148000,162000],expenses:[98000,102000,104000,109000,112000,121000],net:[30000,30000,31000,33000,36000,41000],months:['Nov','Dec','Jan','Feb','Mar','Apr']}
+};
+const tc='rgba(0,0,0,0.4)',gc='rgba(0,0,0,0.05)';
+let tC,eC;
+function buildTrend(d){if(tC)tC.destroy();tC=new Chart(document.getElementById('trendChart'),{type:'bar',data:{labels:d.months,datasets:[{label:'Income',data:d.income,backgroundColor:'#0F3D2E',borderRadius:3},{label:'Expenses',data:d.expenses,backgroundColor:'#C0392B',borderRadius:3},{label:'Net Income',data:d.net,type:'line',borderColor:'#1D9E75',backgroundColor:'transparent',pointBackgroundColor:'#1D9E75',pointRadius:3,borderWidth:2,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+Math.round(c.parsed.y).toLocaleString()}}},scales:{x:{ticks:{color:tc,font:{size:9}},grid:{color:gc}},y:{ticks:{color:tc,font:{size:9},callback:v=>'$'+(v/1000)+'K'},grid:{color:gc}}}}});}
+function buildExpDonut(){if(eC)eC.destroy();eC=new Chart(document.getElementById('expDonut'),{type:'doughnut',data:{labels:['Payroll','Vendor Payables','Rent & Utilities','Software','Other'],datasets:[{data:[44,22,14,11,9],backgroundColor:['#0F3D2E','#1D9E75','#5DCAA5','#9FE1CB','#c8ead8'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+'%'}}}}});}
+function update(){const d=PERIODS[document.getElementById('periodSel').value];document.getElementById('mCash').textContent=d.cash;document.getElementById('mAR').textContent=d.ar;document.getElementById('mAP').textContent=d.ap;document.getElementById('mNI').textContent=d.ni;document.getElementById('mRecon').textContent=d.recon;document.getElementById('mCashD').textContent=d.cashD;document.getElementById('mARD').textContent=d.arD;document.getElementById('mAPD').textContent=d.apD;document.getElementById('mNID').textContent=d.niD;document.getElementById('mReconD').textContent=d.reconD;buildTrend(d);}
+buildTrend(PERIODS['jun']);buildExpDonut();
+</script>
+</body>
+</html>
