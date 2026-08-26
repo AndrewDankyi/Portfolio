@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Retention & Churn Risk Dashboard — Andrew Dankyi Twum</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f2f1f6;padding:16px;color:#1a1a1a;}
+.db{background:#f2f1f6;max-width:1100px;margin:0 auto;}
+.hdr{background:linear-gradient(135deg,#2E1A47 0%,#5B2C6F 100%);border-radius:10px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.hdr-left .title{color:#fff;font-size:16px;font-weight:600;}
+.hdr-left .sub{color:rgba(255,255,255,0.55);font-size:10px;margin-top:2px;}
+.hdr-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.hdr-right select{background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:5px 12px;font-size:11px;cursor:pointer;outline:none;}
+.hdr-right select option{background:#2E1A47;}
+.navlink{background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;}
+.badge{background:rgba(255,255,255,0.15);color:#fff;font-size:9px;padding:3px 10px;border-radius:4px;letter-spacing:0.07em;font-weight:600;}
+.note{background:#fff;border:1px solid #e5e1ee;border-left:3px solid #7A3B9A;border-radius:8px;padding:9px 14px;font-size:10.5px;color:#555;margin-bottom:12px;}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
+.met{background:#fff;border-radius:10px;border:1px solid #e5e1ee;padding:14px 16px;}
+.met-lbl{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;font-weight:600;}
+.met-val{font-size:24px;font-weight:600;color:#1a1a1a;}
+.met-sub{font-size:11px;margin-top:4px;}
+.g{color:#1D9E75;} .r{color:#C0392B;} .a{color:#BA7517;} .b{color:#5B2C6F;}
+.row{display:grid;gap:10px;margin-bottom:10px;}
+.r2{grid-template-columns:1.3fr 1fr;}
+.r3{grid-template-columns:1fr 0.85fr 1.15fr;}
+.card{background:#fff;border-radius:10px;border:1px solid #e5e1ee;padding:14px 16px;}
+.ctitle{font-size:10px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.ctitle span{font-size:9px;color:#999;font-weight:500;text-transform:none;letter-spacing:0;}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.bar-label{font-size:10px;color:#666;width:120px;text-align:right;flex-shrink:0;}
+.bar-track{flex:1;background:#f2f1f6;border-radius:4px;height:16px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width 0.7s ease;}
+.bar-val{font-size:10px;color:#1a1a1a;width:42px;flex-shrink:0;font-weight:600;}
+.donut-legend{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+.dl{display:flex;align-items:center;justify-content:space-between;font-size:10.5px;}
+.dl-left{display:flex;align-items:center;gap:6px;color:#666;}
+.dl-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.dl-val{font-weight:600;color:#1a1a1a;}
+.tbl{width:100%;border-collapse:collapse;font-size:10.5px;}
+.tbl th{color:#888;font-weight:700;font-size:9px;text-align:left;padding:6px 7px;border-bottom:1px solid #f2f1f6;text-transform:uppercase;letter-spacing:0.05em;}
+.tbl td{padding:6.5px 7px;border-bottom:1px solid #f2f1f6;color:#1a1a1a;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:#faf9fc;}
+.pill{display:inline-block;padding:2px 8px;border-radius:9px;font-size:8.5px;font-weight:700;}
+.p-g{background:#EAF3DE;color:#3B6D11;}
+.p-a{background:#FAEEDA;color:#854F0B;}
+.p-r{background:#FCEBEB;color:#A32D2D;}
+.modelrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f2f1f6;}
+.modelrow:last-child{border-bottom:none;}
+.modelname{font-size:11px;font-weight:600;color:#1a1a1a;}
+.modeltag{font-size:8.5px;color:#7A3B9A;font-weight:700;letter-spacing:0.04em;}
+.modelmetrics{display:flex;gap:12px;font-size:9.5px;color:#666;margin-top:2px;}
+.modelmetrics b{color:#1a1a1a;}
+.footer{display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#999;margin-top:8px;padding-top:10px;border-top:1px solid #e5e1ee;flex-wrap:wrap;gap:6px;}
+@media(max-width:750px){.metrics{grid-template-columns:repeat(2,1fr);}.r2,.r3{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="db">
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="title">Customer Retention &amp; Churn Risk Dashboard</div>
+      <div class="sub">Predictive Modeling &nbsp;·&nbsp; Risk Scoring &nbsp;·&nbsp; Segment Analysis &nbsp;·&nbsp; Built by Andrew Dankyi Twum</div>
+    </div>
+    <div class="hdr-right">
+      <select id="segSel" onchange="update()">
+        <option value="all">All Contract Types</option>
+        <option value="mtm">Month-to-Month</option>
+        <option value="one">One Year</option>
+        <option value="two">Two Year</option>
+      </select>
+      <a href="index.html" class="navlink">Business KPI Dashboard</a>
+      <a href="accounting.html" class="navlink">Accounting Dashboard</a>
+      <div class="badge">ML MODEL</div>
+    </div>
+  </div>
+
+  <div class="note">📊 Sample data for demonstration — built on a synthetic 1,200-customer dataset. Model: Logistic Regression, ROC-AUC 0.739. See the <a href="https://github.com/AndrewDankyi/customer-retention-analytics" target="_blank" style="color:#7A3B9A;font-weight:600;">full project on GitHub</a> for the pipeline, notebook, and live Streamlit app.</div>
+
+  <div class="metrics">
+    <div class="met"><div class="met-lbl">Total Customers</div><div class="met-val" id="mTotal">1,200</div><div class="met-sub b" id="mTotalD">Scored by model</div></div>
+    <div class="met"><div class="met-lbl">Churn Rate</div><div class="met-val" id="mChurn">23.1%</div><div class="met-sub r" id="mChurnD">277 churned historically</div></div>
+    <div class="met"><div class="met-lbl">High Risk Customers</div><div class="met-val" id="mHigh">6</div><div class="met-sub a" id="mHighD">0.5% of base &nbsp;·&nbsp; churning ~100%</div></div>
+    <div class="met"><div class="met-lbl">Best Model ROC-AUC</div><div class="met-val" id="mAuc">0.739</div><div class="met-sub g" id="mAucD">Logistic Regression</div></div>
+  </div>
+
+  <div class="row r2">
+    <div class="card">
+      <div class="ctitle">Churn Rate by Contract Type &amp; Risk Band<span>Higher risk band = more likely to churn</span></div>
+      <div class="chart-wrap" style="height:190px;"><canvas id="segChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ctitle">Risk Band Distribution</div>
+      <div class="chart-wrap" style="height:130px;margin-bottom:6px;"><canvas id="riskDonut"></canvas></div>
+      <div class="donut-legend" id="riskLegend"></div>
+    </div>
+  </div>
+
+  <div class="row r3">
+    <div class="card">
+      <div class="ctitle">Top Drivers of Churn<span>Model feature importance</span></div>
+      <div id="featBars"></div>
+    </div>
+    <div class="card">
+      <div class="ctitle">Model Comparison</div>
+      <div id="modelCompare"></div>
+    </div>
+    <div class="card">
+      <div class="ctitle">Highest-Risk Customers<span>Top of the outreach list</span></div>
+      <table class="tbl">
+        <thead><tr><th>ID</th><th>Contract</th><th>Tenure</th><th>Risk</th><th>Band</th></tr></thead>
+        <tbody>
+          <tr><td>10790</td><td>Month-to-month</td><td>2 mo</td><td>75.6%</td><td><span class="pill p-r">High</span></td></tr>
+          <tr><td>11177</td><td>Month-to-month</td><td>15 mo</td><td>72.8%</td><td><span class="pill p-r">High</span></td></tr>
+          <tr><td>10462</td><td>Month-to-month</td><td>12 mo</td><td>72.2%</td><td><span class="pill p-r">High</span></td></tr>
+          <tr><td>10621</td><td>Month-to-month</td><td>5 mo</td><td>72.2%</td><td><span class="pill p-r">High</span></td></tr>
+          <tr><td>10597</td><td>Month-to-month</td><td>3 mo</td><td>71.0%</td><td><span class="pill p-r">High</span></td></tr>
+          <tr><td>10780</td><td>One year</td><td>11 mo</td><td>69.0%</td><td><span class="pill p-a">Medium</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>&#128202; Built by Andrew Dankyi Twum &nbsp;·&nbsp; Data Analyst Portfolio &nbsp;·&nbsp; dankyit@gmail.com</span>
+    <span>Python · scikit-learn · Logistic Regression &amp; Random Forest &nbsp;·&nbsp; Streamlit + Power BI ready</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const SEGMENTS={
+  all:{labels:['Month-to-month','One year','Two year'],
+    low:[17.65,16.05,14.57],med:[47.3,55.56,29.03],high:[100,0,0],
+    total:1200,churnRate:23.08,churned:277,high:'6',highD:'0.5% of base · churning ~100%'},
+  mtm:{labels:['Low Risk','Medium Risk','High Risk'],
+    low:[17.65],med:[47.3],high:[100],
+    total:663,churnRate:27.6,churned:183,high:'5',highD:'0.8% of segment · churning 100%'},
+  one:{labels:['Low Risk','Medium Risk','High Risk'],
+    low:[16.05],med:[55.56],high:[0],
+    total:307,churnRate:19.9,churned:61,high:'1',highD:'0.3% of segment'},
+  two:{labels:['Low Risk','Medium Risk','High Risk'],
+    low:[14.57],med:[29.03],high:[0],
+    total:230,churnRate:16.1,churned:37,high:'0',highD:'No high-risk customers'}
+};
+const RISK_COUNTS={all:{Low:952,Medium:242,High:6},mtm:{Low:510,Medium:148,High:5},one:{Low:243,Medium:63,High:1},two:{Low:199,Medium:31,High:0}};
+const FEATURES=[['Tenure (months)',0.929],['Satisfaction score',0.501],['Total charges',0.410],['Contract: Two year',0.163],['Payment: Electronic check',0.154],['Internet: DSL',0.152]];
+const MODELS=[
+  {name:'Logistic Regression',tag:'BEST MODEL',acc:'79.7%',prec:'72.2%',rec:'18.8%',auc:'0.739'},
+  {name:'Random Forest',tag:'',acc:'78.3%',prec:'64.3%',rec:'13.0%',auc:'0.708'}
+];
+const tc='rgba(0,0,0,0.45)',gc='rgba(0,0,0,0.06)';
+let sC,rC;
+
+function buildSegChart(d){
+  if(sC)sC.destroy();
+  sC=new Chart(document.getElementById('segChart'),{
+    type:'bar',
+    data:{labels:d.labels,datasets:[
+      {label:'Low',data:d.low,backgroundColor:'#2E1A47',borderRadius:3},
+      {label:'Medium',data:d.med,backgroundColor:'#B5539C',borderRadius:3},
+      {label:'High',data:d.high,backgroundColor:'#E88A4C',borderRadius:3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{boxWidth:9,font:{size:9},color:tc}},tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.parsed.y+'%'}}},
+      scales:{x:{ticks:{color:tc,font:{size:9}},grid:{display:false}},y:{ticks:{color:tc,font:{size:9},callback:v=>v+'%'},grid:{color:gc}}}}
+  });
+}
+
+function buildRiskDonut(seg){
+  const r=RISK_COUNTS[seg];
+  if(rC)rC.destroy();
+  rC=new Chart(document.getElementById('riskDonut'),{
+    type:'doughnut',
+    data:{labels:['Low','Medium','High'],datasets:[{data:[r.Low,r.Medium,r.High],backgroundColor:['#2E1A47','#B5539C','#E88A4C'],borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+' customers'}}}}
+  });
+  const total=r.Low+r.Medium+r.High;
+  document.getElementById('riskLegend').innerHTML=[
+    ['Low',r.Low,'#2E1A47'],['Medium',r.Medium,'#B5539C'],['High',r.High,'#E88A4C']
+  ].map(x=>`<div class="dl"><div class="dl-left"><div class="dl-dot" style="background:${x[2]};"></div>${x[0]} Risk</div><div class="dl-val">${x[1]} &nbsp;·&nbsp; ${total?Math.round(x[1]/total*100):0}%</div></div>`).join('');
+}
+
+function buildFeatBars(){
+  const max=FEATURES[0][1];
+  document.getElementById('featBars').innerHTML=FEATURES.map(f=>
+    `<div class="bar-row"><div class="bar-label">${f[0]}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(f[1]/max*100)}%;background:#5B2C6F;"></div></div><div class="bar-val">${f[1].toFixed(2)}</div></div>`
+  ).join('');
+}
+
+function buildModelCompare(){
+  document.getElementById('modelCompare').innerHTML=MODELS.map(m=>
+    `<div class="modelrow"><div><div class="modelname">${m.name}</div><div class="modelmetrics"><span>Acc <b>${m.acc}</b></span><span>Prec <b>${m.prec}</b></span><span>Rec <b>${m.rec}</b></span></div></div><div style="text-align:right;"><div class="modelname" style="color:#5B2C6F;">${m.auc}</div>${m.tag?`<div class="modeltag">${m.tag}</div>`:''}</div></div>`
+  ).join('');
+}
+
+function update(){
+  const seg=document.getElementById('segSel').value;
+  const d=SEGMENTS[seg];
+  document.getElementById('mTotal').textContent=d.total.toLocaleString();
+  document.getElementById('mChurn').textContent=d.churnRate+'%';
+  document.getElementById('mChurnD').textContent=d.churned+' churned historically';
+  document.getElementById('mHigh').textContent=d.high;
+  document.getElementById('mHighD').textContent=d.highD;
+  try{buildSegChart(d);buildRiskDonut(seg);}catch(e){console.error('Chart.js failed to load:',e);}
+}
+
+buildFeatBars();
+buildModelCompare();
+try{
+  buildSegChart(SEGMENTS.all);
+  buildRiskDonut('all');
+}catch(e){console.error('Chart.js failed to load:',e);}
+</script>
+</body>
+</html>
