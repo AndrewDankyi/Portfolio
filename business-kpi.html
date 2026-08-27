@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business KPI Dashboard — Andrew Dankyi Twum</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0f2f5;padding:16px;color:#1a1a1a;}
+.db{background:#f0f2f5;max-width:1100px;margin:0 auto;}
+.db-header{background:#1B3A5C;border-radius:10px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.db-title{color:#fff;font-size:16px;font-weight:600;}
+.db-subtitle{color:rgba(255,255,255,0.6);font-size:11px;margin-top:2px;}
+.db-filters{display:flex;gap:8px;align-items:center;}
+.db-filters select{background:#2a5080;color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;outline:none;}
+.db-badge{background:rgba(255,255,255,0.15);color:#fff;font-size:10px;padding:3px 10px;border-radius:4px;letter-spacing:0.05em;font-weight:600;}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
+.met{background:#fff;border-radius:10px;border:1px solid #e8eaed;padding:14px 16px;}
+.met-label{font-size:10px;color:#666;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.07em;font-weight:500;}
+.met-val{font-size:24px;font-weight:600;color:#1a1a1a;}
+.met-delta{font-size:11px;margin-top:4px;}
+.up{color:#1D9E75;} .dn{color:#C0392B;} .neut{color:#888;}
+.row{display:grid;gap:10px;margin-bottom:10px;}
+.row-2{grid-template-columns:2fr 1fr;}
+.row-3{grid-template-columns:1.2fr 1fr 0.8fr;}
+.card{background:#fff;border-radius:10px;border:1px solid #e8eaed;padding:14px 16px;}
+.card-title{font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
+.chart-wrap{position:relative;}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.bar-label{font-size:10px;color:#666;width:90px;text-align:right;flex-shrink:0;}
+.bar-track{flex:1;background:#f0f2f5;border-radius:4px;height:16px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width 0.7s ease;}
+.bar-val{font-size:10px;color:#1a1a1a;width:40px;flex-shrink:0;font-weight:500;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#666;margin-bottom:4px;}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.tbl{width:100%;border-collapse:collapse;font-size:11px;}
+.tbl th{color:#888;font-weight:600;text-align:left;padding:6px 8px;border-bottom:1px solid #f0f2f5;text-transform:uppercase;letter-spacing:0.05em;font-size:9px;}
+.tbl td{padding:7px 8px;border-bottom:1px solid #f0f2f5;color:#1a1a1a;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:#fafbfc;}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:600;}
+.pill-g{background:#EAF3DE;color:#3B6D11;}
+.pill-r{background:#FCEBEB;color:#A32D2D;}
+.pill-a{background:#FAEEDA;color:#854F0B;}
+.sparkline-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.spark-label{font-size:10px;color:#666;width:68px;flex-shrink:0;}
+.spark-val{font-size:10px;font-weight:600;color:#1a1a1a;width:38px;text-align:right;flex-shrink:0;}
+.footer{display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#999;margin-top:8px;padding-top:10px;border-top:1px solid #e8eaed;}
+@media(max-width:700px){.metrics{grid-template-columns:repeat(2,1fr);}.row-2,.row-3{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="db">
+  <div class="db-header">
+    <div>
+      <div class="db-title">Business Performance Dashboard</div>
+      <div class="db-subtitle">Executive KPI Overview &nbsp;·&nbsp; Built by Andrew Dankyi Twum, Data Analyst &nbsp;·&nbsp; Updated June 2026</div>
+    </div>
+    <div class="db-filters">
+      <select id="yearSel" onchange="update()">
+        <option value="2026">FY 2026</option>
+        <option value="2025">FY 2025</option>
+        <option value="2024">FY 2024</option>
+      </select>
+      <select id="regionSel" onchange="update()">
+        <option value="all">All Regions</option>
+        <option value="ne">Northeast</option>
+        <option value="se">Southeast</option>
+        <option value="mw">Midwest</option>
+        <option value="w">West</option>
+      </select>
+      <a href="index.html" style="background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">&larr; Portfolio</a>
+      <a href="accounting.html" style="background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">Accounting Dashboard &rarr;</a>
+      <a href="retention.html" style="background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">Retention Dashboard &rarr;</a>
+      <div class="db-badge">INTERACTIVE</div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="met"><div class="met-label">Total Revenue</div><div class="met-val" id="mRev">$4.2M</div><div class="met-delta up" id="mRevD">▲ +18.4% vs prior year</div></div>
+    <div class="met"><div class="met-label">Net Profit Margin</div><div class="met-val" id="mMar">23.7%</div><div class="met-delta up" id="mMarD">▲ +2.1pp vs prior year</div></div>
+    <div class="met"><div class="met-label">Active Customers</div><div class="met-val" id="mCust">3,841</div><div class="met-delta up" id="mCustD">▲ +12.6% vs prior year</div></div>
+    <div class="met"><div class="met-label">Avg Order Value</div><div class="met-val" id="mAov">$1,093</div><div class="met-delta up" id="mAovD">▲ +5.1% vs prior year</div></div>
+  </div>
+
+  <div class="row row-2">
+    <div class="card">
+      <div class="card-title">Monthly Revenue Trend ($K)</div>
+      <div class="chart-wrap" style="height:170px;"><canvas id="trendChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Revenue by Category</div>
+      <div id="catBars" style="margin-top:4px;"></div>
+    </div>
+  </div>
+
+  <div class="row row-3">
+    <div class="card">
+      <div class="card-title">Regional Performance ($K)</div>
+      <div class="chart-wrap" style="height:155px;"><canvas id="regionChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Revenue Mix</div>
+      <div class="chart-wrap" style="height:120px;margin-bottom:10px;"><canvas id="donutChart"></canvas></div>
+      <div class="legend-item"><div class="leg-dot" style="background:#1B3A5C;"></div>Products — 54%</div>
+      <div class="legend-item"><div class="leg-dot" style="background:#378ADD;"></div>Services — 28%</div>
+      <div class="legend-item"><div class="leg-dot" style="background:#85B7EB;"></div>Subscriptions — 18%</div>
+    </div>
+    <div class="card">
+      <div class="card-title">KPI Scorecard</div>
+      <div id="scorecard"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px;">
+    <div class="card-title">Top 8 Products by Revenue — YTD</div>
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Product / Service</th><th>Revenue</th><th>Units Sold</th><th>Margin</th><th>Trend</th><th>Status</th></tr></thead>
+      <tbody id="prodTable"></tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <span>&#128202; Built by Andrew Dankyi Twum &nbsp;·&nbsp; Data Analyst Portfolio &nbsp;·&nbsp; dankyit@gmail.com</span>
+    <span>Source: Internal Business Systems &nbsp;·&nbsp; SQL + Python ETL Pipeline &nbsp;·&nbsp; Visualized Jun 2026</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const DATA={
+  2024:{rev:'$3.6M',mar:'51.9%',cust:'1,897',aov:'$913',revD:'—',marD:'—',custD:'—',aovD:'—',
+    trend:[247, 296, 277, 266, 318, 293, 303, 314, 292, 341, 317, 313],
+    regions:["West", "Northeast", "Midwest", "Southeast"],regVals:[1242, 942, 816, 576],
+    cats:[['Data Services',100],['Analytics SaaS',80],['Consulting',65],['BI Licensing',43],['Training',28],['Support',19]],donut:[8, 49, 42]},
+  2025:{rev:'$4.8M',mar:'51.9%',cust:'2,255',aov:'$1,066',revD:'▲ +34.9%',marD:'▲ +0.0pp',custD:'▲ +18.9%',aovD:'▲ +16.8%',
+    trend:[354, 360, 398, 346, 398, 376, 398, 386, 406, 493, 462, 448],
+    regions:["West", "Northeast", "Midwest", "Southeast"],regVals:[1601, 1325, 1092, 807],
+    cats:[['Data Services',100],['Analytics SaaS',86],['Consulting',62],['BI Licensing',43],['Training',30],['Support',19]],donut:[9, 48, 44]},
+  2026:{rev:'$6.7M',mar:'52.0%',cust:'2,638',aov:'$1,241',revD:'▲ +39.3%',marD:'▲ +0.0pp',custD:'▲ +17.0%',aovD:'▲ +16.4%',
+    trend:[495, 540, 522, 502, 513, 579, 518, 553, 598, 644, 628, 629],
+    regions:["West", "Northeast", "Midwest", "Southeast"],regVals:[2167, 1743, 1621, 1190],
+    cats:[['Data Services',100],['Analytics SaaS',89],['Consulting',62],['BI Licensing',44],['Training',32],['Support',19]],donut:[8, 48, 44]}
+};
+const SCORECARDS={
+  2024:[['Retention','n/a (yr 1)','neut'],['Churn Rate','n/a (yr 1)','dn'],['NPS Score','20','up'],['Pipeline','3.7x','up'],['CAC','$1773','neut'],['LTV:CAC','5.5x','up']],
+  2025:[['Retention','80.5%','up'],['Churn Rate','19.5%','dn'],['NPS Score','29','up'],['Pipeline','3.4x','up'],['CAC','$1557','neut'],['LTV:CAC','3.7x','up']],
+  2026:[['Retention','79.6%','up'],['Churn Rate','20.4%','dn'],['NPS Score','28','up'],['Pipeline','3.2x','up'],['CAC','$1432','neut'],['LTV:CAC','4.5x','up']]
+};
+const PRODUCTS_BY_YEAR={
+  2024:[['Analytics SaaS Pro','$853K',782,'55.1%','▲','On Track'],['Consulting Retainer','$693K',313,'47.8%','▲','On Track'],['Data Pipeline Setup','$524K',195,'42.7%','→','Watch'],['Power BI License Mgmt','$458K',682,'58.2%','▲','On Track'],['Training Program','$303K',433,'62.1%','▲','On Track'],['Tableau Dashboards','$297K',169,'46.8%','▲','On Track'],['SQL Optimization','$245K',111,'40.6%','→','Watch'],['Support & Maintenance','$203K',1233,'67.9%','▲','On Track']],
+  2025:[['Analytics SaaS Pro','$1219K',945,'55.0%','▲','On Track'],['Consulting Retainer','$875K',339,'48.0%','▲','On Track'],['Data Pipeline Setup','$676K',214,'42.3%','→','Watch'],['Power BI License Mgmt','$617K',788,'57.9%','▲','On Track'],['Training Program','$427K',521,'62.2%','▲','On Track'],['Tableau Dashboards','$412K',199,'46.8%','▲','On Track'],['SQL Optimization','$331K',129,'39.9%','→','Watch'],['Support & Maintenance','$269K',1391,'68.0%','▲','On Track']],
+  2026:[['Analytics SaaS Pro','$1722K',1149,'54.9%','▲','On Track'],['Consulting Retainer','$1203K',402,'47.7%','▲','On Track'],['Data Pipeline Setup','$980K',265,'42.2%','→','Watch'],['Power BI License Mgmt','$863K',943,'58.0%','▲','On Track'],['Training Program','$616K',640,'61.9%','▲','On Track'],['Tableau Dashboards','$529K',219,'47.1%','▲','On Track'],['SQL Optimization','$436K',146,'40.1%','→','Watch'],['Support & Maintenance','$374K',1654,'68.0%','▲','On Track']]
+};
+const tc='rgba(0,0,0,0.45)',gc='rgba(0,0,0,0.06)';
+let tC,rC,dC;
+function buildTrend(d){const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];if(tC)tC.destroy();tC=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:m,datasets:[{label:'Revenue ($K)',data:d.trend,borderColor:'#1B3A5C',backgroundColor:'rgba(27,58,92,0.07)',fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#1B3A5C',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+c.parsed.y+'K'}}},scales:{x:{ticks:{color:tc,font:{size:9}},grid:{color:gc}},y:{ticks:{color:tc,font:{size:9},callback:v=>'$'+v+'K'},grid:{color:gc}}}}});}
+function buildRegion(d){if(rC)rC.destroy();rC=new Chart(document.getElementById('regionChart'),{type:'bar',data:{labels:d.regions,datasets:[{data:d.regVals,backgroundColor:['#1B3A5C','#378ADD','#185FA5','#85B7EB'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+Math.round(c.parsed.x)+'K'}}},scales:{x:{ticks:{color:tc,font:{size:9},callback:v=>'$'+v+'K'},grid:{color:gc}},y:{ticks:{color:tc,font:{size:9}},grid:{color:gc}}}}});}
+function buildDonut(d){if(dC)dC.destroy();dC=new Chart(document.getElementById('donutChart'),{type:'doughnut',data:{labels:['Products','Services','Subscriptions'],datasets:[{data:d.donut,backgroundColor:['#1B3A5C','#378ADD','#85B7EB'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+'%'}}}}});}
+function buildCats(d){const max=d.cats[0][1];const cols=['#1B3A5C','#185FA5','#378ADD','#85B7EB','#B5D4F4','#E6F1FB'];document.getElementById('catBars').innerHTML=d.cats.map((c,i)=>`<div class="bar-row"><div class="bar-label">${c[0]}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c[1]/max*100)}%;background:${cols[i]};"></div></div><div class="bar-val">${c[1]}%</div></div>`).join('');}
+function buildScorecard(yr){const kpis=SCORECARDS[yr];document.getElementById('scorecard').innerHTML=kpis.map(k=>`<div class="sparkline-row"><div class="spark-label">${k[0]}</div><div style="flex:1;height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;"><div style="height:100%;width:${k[2]==='up'?'78%':k[2]==='dn'?'28%':'55%'};background:${k[2]==='up'?'#1D9E75':k[2]==='dn'?'#C0392B':'#378ADD'};border-radius:3px;"></div></div><div class="spark-val ${k[2]==='up'?'up':k[2]==='dn'?'dn':'neut'}">${k[1]}</div></div>`).join('');}
+function buildTable(yr){const P=PRODUCTS_BY_YEAR[yr];document.getElementById('prodTable').innerHTML=P.map((p,i)=>`<tr><td style="color:#999;">${i+1}</td><td style="font-weight:500;">${p[0]}</td><td>${p[1]}</td><td>${Number(p[2]).toLocaleString()}</td><td>${p[3]}</td><td style="color:${p[4]==='▲'?'#1D9E75':p[4]==='▼'?'#C0392B':'#BA7517'};font-weight:600;">${p[4]}</td><td><span class="pill ${p[5]==='On Track'?'pill-g':p[5]==='Watch'?'pill-a':'pill-r'}">${p[5]}</span></td></tr>`).join('');}
+function update(){const yr=document.getElementById('yearSel').value;const d=DATA[yr];document.getElementById('mRev').textContent=d.rev;document.getElementById('mMar').textContent=d.mar;document.getElementById('mCust').textContent=d.cust;document.getElementById('mAov').textContent=d.aov;['mRevD','mMarD','mCustD','mAovD'].forEach((id,i)=>{const el=document.getElementById(id);const val=[d.revD,d.marD,d.custD,d.aovD][i];el.textContent=(val==='—'?'First year on record':val+' vs prior year');el.className='met-delta '+(val.includes('▼')?'dn':val==='—'?'neut':'up');});buildTrend(d);buildRegion(d);buildDonut(d);buildCats(d);buildScorecard(yr);buildTable(yr);}
+update();
+</script>
+</body>
+</html>

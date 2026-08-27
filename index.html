@@ -3,154 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Business KPI Dashboard — Andrew Dankyi Twum</title>
+<title>Andrew Dankyi Twum — Data & Financial Analyst Portfolio</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0f2f5;padding:16px;color:#1a1a1a;}
-.db{background:#f0f2f5;max-width:1100px;margin:0 auto;}
-.db-header{background:#1B3A5C;border-radius:10px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.db-title{color:#fff;font-size:16px;font-weight:600;}
-.db-subtitle{color:rgba(255,255,255,0.6);font-size:11px;margin-top:2px;}
-.db-filters{display:flex;gap:8px;align-items:center;}
-.db-filters select{background:#2a5080;color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;outline:none;}
-.db-badge{background:rgba(255,255,255,0.15);color:#fff;font-size:10px;padding:3px 10px;border-radius:4px;letter-spacing:0.05em;font-weight:600;}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
-.met{background:#fff;border-radius:10px;border:1px solid #e8eaed;padding:14px 16px;}
-.met-label{font-size:10px;color:#666;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.07em;font-weight:500;}
-.met-val{font-size:24px;font-weight:600;color:#1a1a1a;}
-.met-delta{font-size:11px;margin-top:4px;}
-.up{color:#1D9E75;} .dn{color:#C0392B;} .neut{color:#888;}
-.row{display:grid;gap:10px;margin-bottom:10px;}
-.row-2{grid-template-columns:2fr 1fr;}
-.row-3{grid-template-columns:1.2fr 1fr 0.8fr;}
-.card{background:#fff;border-radius:10px;border:1px solid #e8eaed;padding:14px 16px;}
-.card-title{font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
-.chart-wrap{position:relative;}
-.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
-.bar-label{font-size:10px;color:#666;width:90px;text-align:right;flex-shrink:0;}
-.bar-track{flex:1;background:#f0f2f5;border-radius:4px;height:16px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:4px;transition:width 0.7s ease;}
-.bar-val{font-size:10px;color:#1a1a1a;width:40px;flex-shrink:0;font-weight:500;}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#666;margin-bottom:4px;}
-.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.tbl{width:100%;border-collapse:collapse;font-size:11px;}
-.tbl th{color:#888;font-weight:600;text-align:left;padding:6px 8px;border-bottom:1px solid #f0f2f5;text-transform:uppercase;letter-spacing:0.05em;font-size:9px;}
-.tbl td{padding:7px 8px;border-bottom:1px solid #f0f2f5;color:#1a1a1a;}
-.tbl tr:last-child td{border-bottom:none;}
-.tbl tr:hover td{background:#fafbfc;}
-.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:600;}
-.pill-g{background:#EAF3DE;color:#3B6D11;}
-.pill-r{background:#FCEBEB;color:#A32D2D;}
-.pill-a{background:#FAEEDA;color:#854F0B;}
-.sparkline-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
-.spark-label{font-size:10px;color:#666;width:68px;flex-shrink:0;}
-.spark-val{font-size:10px;font-weight:600;color:#1a1a1a;width:38px;text-align:right;flex-shrink:0;}
-.footer{display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#999;margin-top:8px;padding-top:10px;border-top:1px solid #e8eaed;}
-@media(max-width:700px){.metrics{grid-template-columns:repeat(2,1fr);}.row-2,.row-3{grid-template-columns:1fr;}}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F1F3F6;color:#1a1a2e;padding:20px;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1100px;margin:0 auto;}
+
+  .hero{background:linear-gradient(135deg,#0B2545 0%,#1B3F55 45%,#2A93B5 100%);border-radius:14px;padding:40px 36px;margin-bottom:24px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:rgba(201,168,76,0.08);}
+  .hero-content{position:relative;z-index:1;}
+  .hero h1{color:#fff;font-size:30px;font-weight:700;margin-bottom:8px;}
+  .hero .tagline{color:#F0D080;font-size:14px;font-weight:600;margin-bottom:14px;letter-spacing:0.01em;}
+  .hero p{color:rgba(255,255,255,0.72);font-size:13px;max-width:640px;line-height:1.6;margin-bottom:20px;}
+  .hero-links{display:flex;gap:10px;flex-wrap:wrap;}
+  .hero-link{background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:12px;font-weight:600;padding:8px 16px;border-radius:7px;}
+  .hero-link:hover{background:rgba(255,255,255,0.22);}
+
+  .section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#5B7182;margin:28px 0 14px;}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .card{background:#fff;border:1px solid #DDE4E9;border-radius:12px;padding:20px;display:flex;flex-direction:column;transition:transform 0.15s ease, box-shadow 0.15s ease;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(11,37,69,0.08);}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+  .card-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .card-tag{font-size:8.5px;font-weight:700;letter-spacing:0.06em;padding:3px 8px;border-radius:5px;text-transform:uppercase;}
+  .card h3{font-size:15px;font-weight:700;margin-bottom:6px;color:#1a1a2e;}
+  .card p{font-size:11.5px;color:#5B7182;line-height:1.55;flex-grow:1;margin-bottom:14px;}
+  .card-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+  .b{font-size:8.5px;font-weight:700;padding:3px 8px;border-radius:5px;background:#F1F3F6;color:#5B7182;}
+  .card-cta{font-size:12px;font-weight:700;color:#1D6B8C;display:flex;align-items:center;gap:5px;}
+  .card-cta.disabled{color:#B0B8BF;}
+  .card-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .card-ctas a{font-size:11.5px;font-weight:700;color:#1D6B8C;display:flex;align-items:center;gap:4px;}
+  .card-ctas a.code{color:#5B7182;}
+
+  .ic-navy{background:#0B25451A;color:#0B2545;}
+  .ic-green{background:#1D9E751A;color:#1D9E75;}
+  .ic-purple{background:#5B2C6F1A;color:#5B2C6F;}
+  .ic-teal{background:#1D6B8C1A;color:#1D6B8C;}
+  .ic-amber{background:#C97A2B1A;color:#C97A2B;}
+  .ic-red{background:#C0392B1A;color:#C0392B;}
+
+  .t-live{background:#EAF3DE;color:#3B6D11;}
+  .t-code{background:#F0F0F0;color:#555;}
+
+  .footer{text-align:center;font-size:11px;color:#8A97A3;margin-top:36px;padding-top:20px;border-top:1px solid #DDE4E9;}
+  .footer a{color:#1D6B8C;font-weight:600;}
+
+  @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr;}.hero h1{font-size:24px;}}
 </style>
 </head>
 <body>
-<div class="db">
-  <div class="db-header">
-    <div>
-      <div class="db-title">Business Performance Dashboard</div>
-      <div class="db-subtitle">Executive KPI Overview &nbsp;·&nbsp; Built by Andrew Dankyi Twum, Data Analyst &nbsp;·&nbsp; Updated June 2026</div>
-    </div>
-    <div class="db-filters">
-      <select id="yearSel" onchange="update()">
-        <option value="2026">FY 2026</option>
-        <option value="2025">FY 2025</option>
-        <option value="2024">FY 2024</option>
-      </select>
-      <select id="regionSel" onchange="update()">
-        <option value="all">All Regions</option>
-        <option value="ne">Northeast</option>
-        <option value="se">Southeast</option>
-        <option value="mw">Midwest</option>
-        <option value="w">West</option>
-      </select>
-      <a href="accounting.html" style="background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">Accounting Dashboard &rarr;</a>
-      <div class="db-badge">INTERACTIVE</div>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Andrew Dankyi Twum</h1>
+      <div class="tagline">Data &amp; Financial Analyst | Financial Modeling | SQL | Power BI | FP&amp;A | 10+ Years Experience</div>
+      <p>A collection of interactive dashboards and analytics projects spanning financial reporting, predictive modeling, and reconciliation automation — built end-to-end from raw data through to deployed, working tools.</p>
+      <div class="hero-links">
+        <a class="hero-link" href="mailto:dankyit@yahoo.com">✉ dankyit@yahoo.com</a>
+        <a class="hero-link" href="http://www.linkedin.com/in/andrew-twum" target="_blank">LinkedIn</a>
+        <a class="hero-link" href="https://github.com/AndrewDankyi" target="_blank">GitHub</a>
+      </div>
     </div>
   </div>
 
-  <div class="metrics">
-    <div class="met"><div class="met-label">Total Revenue</div><div class="met-val" id="mRev">$4.2M</div><div class="met-delta up" id="mRevD">▲ +18.4% vs prior year</div></div>
-    <div class="met"><div class="met-label">Net Profit Margin</div><div class="met-val" id="mMar">23.7%</div><div class="met-delta up" id="mMarD">▲ +2.1pp vs prior year</div></div>
-    <div class="met"><div class="met-label">Active Customers</div><div class="met-val" id="mCust">3,841</div><div class="met-delta up" id="mCustD">▲ +12.6% vs prior year</div></div>
-    <div class="met"><div class="met-label">Avg Order Value</div><div class="met-val" id="mAov">$1,093</div><div class="met-delta up" id="mAovD">▲ +5.1% vs prior year</div></div>
+  <div class="section-title">Interactive Dashboards</div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon ic-navy">📊</div>
+        <div class="card-tag t-live">LIVE</div>
+      </div>
+      <h3>Business KPI Dashboard</h3>
+      <p>Executive-style overview of revenue, margin, and operational KPIs — computed from 13,800+ simulated orders across 3 fiscal years, not hardcoded.</p>
+      <div class="card-badges"><span class="b">Python</span><span class="b">pandas</span><span class="b">Chart.js</span></div>
+      <div class="card-ctas">
+        <a href="business-kpi.html">View dashboard →</a>
+        <a class="code" href="https://github.com/AndrewDankyi/business-analytics" target="_blank">View pipeline code ↗</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon ic-green">💰</div>
+        <div class="card-tag t-live">LIVE</div>
+      </div>
+      <h3>Accounting Dashboard</h3>
+      <p>Live ledger view with AR/AP aging, bank reconciliation, and cash flow — computed from simulated GL, invoice, and bank data across 3 periods.</p>
+      <div class="card-badges"><span class="b">Python</span><span class="b">pandas</span><span class="b">Chart.js</span></div>
+      <div class="card-ctas">
+        <a href="accounting.html">View dashboard →</a>
+        <a class="code" href="https://github.com/AndrewDankyi/bookkeeping-analytics" target="_blank">View pipeline code ↗</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon ic-purple">📉</div>
+        <div class="card-tag t-live">LIVE</div>
+      </div>
+      <h3>Customer Retention &amp; Churn Risk</h3>
+      <p>Risk-banded customer scoring dashboard — churn rate by segment, top drivers, and a filterable risk-tier breakdown, driven by a real trained model's output.</p>
+      <div class="card-badges"><span class="b">HTML/JS</span><span class="b">Chart.js</span></div>
+      <div class="card-ctas">
+        <a href="retention.html">View dashboard →</a>
+        <a class="code" href="https://github.com/AndrewDankyi/customer-retention-analytics" target="_blank">View pipeline code ↗</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon ic-teal">🏥</div>
+        <div class="card-tag t-live">LIVE</div>
+      </div>
+      <h3>BridgeCare Analytics</h3>
+      <p>30-day hospital readmission risk model — 4-model comparison, SHAP explainability, SMOTE-balanced training, 0.875 test ROC-AUC.</p>
+      <div class="card-badges"><span class="b">Python</span><span class="b">scikit-learn</span><span class="b">SHAP</span></div>
+      <div class="card-ctas">
+        <a href="https://andrewdankyi.github.io/bridgecare-analytics/" target="_blank">View dashboard ↗</a>
+        <a class="code" href="https://github.com/AndrewDankyi/bridgecare-analytics" target="_blank">View code ↗</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon ic-amber">🏦</div>
+        <div class="card-tag t-live">LIVE</div>
+      </div>
+      <h3>Transaction Reconciliation Analytics</h3>
+      <p>Rule-based bank-to-GL reconciliation engine — 96.3% match rate, aged outstanding items, and a balance that ties to the penny.</p>
+      <div class="card-badges"><span class="b">Python</span><span class="b">pandas</span></div>
+      <div class="card-ctas">
+        <a href="https://andrewdankyi.github.io/reconciliation-analytics/" target="_blank">View dashboard ↗</a>
+        <a class="code" href="https://github.com/AndrewDankyi/reconciliation-analytics" target="_blank">View code ↗</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon ic-red">🔮</div>
+        <div class="card-tag t-code">CODE + APP</div>
+      </div>
+      <h3>Customer Retention Analytics (ML)</h3>
+      <p>End-to-end churn prediction pipeline with a Streamlit app for live risk scoring — model comparison, feature importance, and segment views.</p>
+      <div class="card-badges"><span class="b">Python</span><span class="b">Streamlit</span><span class="b">Docker</span></div>
+      <div class="card-ctas">
+        <a href="https://github.com/AndrewDankyi/customer-retention-analytics" target="_blank">View code ↗</a>
+      </div>
+    </div>
+
   </div>
 
-  <div class="row row-2">
-    <div class="card">
-      <div class="card-title">Monthly Revenue Trend ($K)</div>
-      <div class="chart-wrap" style="height:170px;"><canvas id="trendChart"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Revenue by Category</div>
-      <div id="catBars" style="margin-top:4px;"></div>
-    </div>
-  </div>
-
-  <div class="row row-3">
-    <div class="card">
-      <div class="card-title">Regional Performance ($K)</div>
-      <div class="chart-wrap" style="height:155px;"><canvas id="regionChart"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Revenue Mix</div>
-      <div class="chart-wrap" style="height:120px;margin-bottom:10px;"><canvas id="donutChart"></canvas></div>
-      <div class="legend-item"><div class="leg-dot" style="background:#1B3A5C;"></div>Products — 54%</div>
-      <div class="legend-item"><div class="leg-dot" style="background:#378ADD;"></div>Services — 28%</div>
-      <div class="legend-item"><div class="leg-dot" style="background:#85B7EB;"></div>Subscriptions — 18%</div>
-    </div>
-    <div class="card">
-      <div class="card-title">KPI Scorecard</div>
-      <div id="scorecard"></div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:12px;">
-    <div class="card-title">Top 8 Products by Revenue — YTD</div>
-    <table class="tbl">
-      <thead><tr><th>#</th><th>Product / Service</th><th>Revenue</th><th>Units Sold</th><th>Margin</th><th>Trend</th><th>Status</th></tr></thead>
-      <tbody id="prodTable"></tbody>
-    </table>
+  <div class="section-title">Writing</div>
+  <div class="grid">
+    <a class="card" href="article.html">
+      <div class="card-top">
+        <div class="card-icon ic-navy">📝</div>
+      </div>
+      <h3>Featured Article</h3>
+      <p>Long-form writing sample on data and financial analytics topics.</p>
+      <div class="card-cta">Read article →</div>
+    </a>
   </div>
 
   <div class="footer">
-    <span>&#128202; Built by Andrew Dankyi Twum &nbsp;·&nbsp; Data Analyst Portfolio &nbsp;·&nbsp; dankyit@gmail.com</span>
-    <span>Source: Internal Business Systems &nbsp;·&nbsp; SQL + Python ETL Pipeline &nbsp;·&nbsp; Visualized Jun 2026</span>
+    Built by Andrew Dankyi Twum · Kansas City, MO · <a href="mailto:dankyit@yahoo.com">dankyit@yahoo.com</a>
   </div>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-const DATA={
-  2026:{rev:'$4.2M',mar:'23.7%',cust:'3,841',aov:'$1,093',revD:'▲ +18.4%',marD:'▲ +2.1pp',custD:'▲ +12.6%',aovD:'▲ +5.1%',
-    trend:[280,295,310,318,330,345,355,370,382,395,408,420],
-    regions:['West','Northeast','Midwest','Southeast'],regVals:[1310,1100,980,810],
-    cats:[['Analytics SaaS',88],['Consulting',72],['Data Services',61],['BI Licensing',54],['Training',38],['Support',27]],donut:[54,28,18]},
-  2025:{rev:'$3.5M',mar:'21.6%',cust:'3,412',aov:'$1,040',revD:'▲ +11.2%',marD:'▲ +1.4pp',custD:'▲ +9.3%',aovD:'▲ +3.2%',
-    trend:[220,232,241,250,258,265,270,278,284,290,298,305],
-    regions:['West','Northeast','Midwest','Southeast'],regVals:[1050,920,820,710],
-    cats:[['Analytics SaaS',80],['Consulting',65],['Data Services',55],['BI Licensing',48],['Training',32],['Support',22]],donut:[51,30,19]},
-  2024:{rev:'$3.1M',mar:'20.2%',cust:'3,118',aov:'$995',revD:'▲ +8.1%',marD:'▲ +0.9pp',custD:'▲ +6.7%',aovD:'▲ +2.1%',
-    trend:[195,202,208,214,220,226,231,237,242,248,254,260],
-    regions:['West','Northeast','Midwest','Southeast'],regVals:[920,800,740,640],
-    cats:[['Analytics SaaS',74],['Consulting',59],['Data Services',50],['BI Licensing',43],['Training',28],['Support',19]],donut:[49,31,20]}
-};
-const PRODUCTS=[['Analytics SaaS Pro','$892K',812,'41.2%','▲','On Track'],['Consulting Retainer','$631K',287,'38.7%','▲','On Track'],['Data Pipeline Setup','$524K',194,'35.1%','▲','On Track'],['Power BI License Mgmt','$418K',623,'44.8%','→','Watch'],['Training Program','$312K',448,'52.3%','▲','On Track'],['Tableau Dashboards','$287K',163,'39.6%','▲','On Track'],['SQL Optimization','$215K',97,'33.4%','▼','Review'],['Support & Maintenance','$198K',1204,'61.2%','→','Watch']];
-const tc='rgba(0,0,0,0.45)',gc='rgba(0,0,0,0.06)';
-let tC,rC,dC;
-function buildTrend(d){const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];if(tC)tC.destroy();tC=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:m,datasets:[{label:'Revenue ($K)',data:d.trend,borderColor:'#1B3A5C',backgroundColor:'rgba(27,58,92,0.07)',fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#1B3A5C',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+c.parsed.y+'K'}}},scales:{x:{ticks:{color:tc,font:{size:9}},grid:{color:gc}},y:{ticks:{color:tc,font:{size:9},callback:v=>'$'+v+'K'},grid:{color:gc}}}}});}
-function buildRegion(d){if(rC)rC.destroy();rC=new Chart(document.getElementById('regionChart'),{type:'bar',data:{labels:d.regions,datasets:[{data:d.regVals,backgroundColor:['#1B3A5C','#378ADD','#185FA5','#85B7EB'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+Math.round(c.parsed.x)+'K'}}},scales:{x:{ticks:{color:tc,font:{size:9},callback:v=>'$'+v+'K'},grid:{color:gc}},y:{ticks:{color:tc,font:{size:9}},grid:{color:gc}}}}});}
-function buildDonut(d){if(dC)dC.destroy();dC=new Chart(document.getElementById('donutChart'),{type:'doughnut',data:{labels:['Products','Services','Subscriptions'],datasets:[{data:d.donut,backgroundColor:['#1B3A5C','#378ADD','#85B7EB'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+'%'}}}}});}
-function buildCats(d){const max=d.cats[0][1];const cols=['#1B3A5C','#185FA5','#378ADD','#85B7EB','#B5D4F4','#E6F1FB'];document.getElementById('catBars').innerHTML=d.cats.map((c,i)=>`<div class="bar-row"><div class="bar-label">${c[0]}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c[1]/max*100)}%;background:${cols[i]};"></div></div><div class="bar-val">${c[1]}%</div></div>`).join('');}
-function buildScorecard(){const kpis=[['Retention','94.2%','up'],['Churn Rate','5.8%','dn'],['NPS Score','72','up'],['Pipeline','3.4x','up'],['CAC','$312','neut'],['LTV:CAC','8.9x','up']];document.getElementById('scorecard').innerHTML=kpis.map(k=>`<div class="sparkline-row"><div class="spark-label">${k[0]}</div><div style="flex:1;height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;"><div style="height:100%;width:${k[2]==='up'?'78%':k[2]==='dn'?'28%':'55%'};background:${k[2]==='up'?'#1D9E75':k[2]==='dn'?'#C0392B':'#378ADD'};border-radius:3px;"></div></div><div class="spark-val ${k[2]==='up'?'up':k[2]==='dn'?'dn':'neut'}">${k[1]}</div></div>`).join('');}
-function buildTable(){document.getElementById('prodTable').innerHTML=PRODUCTS.map((p,i)=>`<tr><td style="color:#999;">${i+1}</td><td style="font-weight:500;">${p[0]}</td><td>${p[1]}</td><td>${Number(p[2]).toLocaleString()}</td><td>${p[3]}</td><td style="color:${p[4]==='▲'?'#1D9E75':p[4]==='▼'?'#C0392B':'#BA7517'};font-weight:600;">${p[4]}</td><td><span class="pill ${p[5]==='On Track'?'pill-g':p[5]==='Watch'?'pill-a':'pill-r'}">${p[5]}</span></td></tr>`).join('');}
-function update(){const yr=document.getElementById('yearSel').value;const d=DATA[yr];document.getElementById('mRev').textContent=d.rev;document.getElementById('mMar').textContent=d.mar;document.getElementById('mCust').textContent=d.cust;document.getElementById('mAov').textContent=d.aov;['mRevD','mMarD','mCustD','mAovD'].forEach((id,i)=>{const el=document.getElementById(id);el.textContent=[d.revD,d.marD,d.custD,d.aovD][i]+' vs prior year';el.className='met-delta up';});buildTrend(d);buildRegion(d);buildDonut(d);buildCats(d);}
-buildTrend(DATA[2026]);buildRegion(DATA[2026]);buildDonut(DATA[2026]);buildScorecard();buildTable();
-</script>
+</div>
 </body>
 </html>

@@ -76,16 +76,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
         <option value="may">May 2026</option>
         <option value="apr">April 2026</option>
       </select>
-      <a href="index.html" style="background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">&larr; Business KPI Dashboard</a>
+      <a href="index.html" style="background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">&larr; Portfolio</a>
+      <a href="business-kpi.html" style="background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">Business KPI Dashboard</a>
+      <a href="retention.html" style="background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:5px 13px;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">Retention Dashboard &rarr;</a>
       <div class="badge">LIVE LEDGER</div>
     </div>
   </div>
 
   <div class="metrics">
-    <div class="met"><div class="met-lbl">Cash Balance</div><div class="met-val" id="mCash">$284,620</div><div class="met-sub g" id="mCashD">▲ +$18,340 MTD</div></div>
-    <div class="met"><div class="met-lbl">Accounts Receivable</div><div class="met-val" id="mAR">$142,880</div><div class="met-sub a" id="mARD">38 open invoices</div></div>
-    <div class="met"><div class="met-lbl">Accounts Payable</div><div class="met-val" id="mAP">$67,340</div><div class="met-sub r" id="mAPD">14 bills due</div></div>
-    <div class="met"><div class="met-lbl">Net Income (MTD)</div><div class="met-val" id="mNI">$52,140</div><div class="met-sub g" id="mNID">▲ +11.2% vs prior mo.</div></div>
+    <div class="met"><div class="met-lbl">Cash Balance</div><div class="met-val" id="mCash">$455,010</div><div class="met-sub g" id="mCashD">▲ +$33,011 MTD</div></div>
+    <div class="met"><div class="met-lbl">Accounts Receivable</div><div class="met-val" id="mAR">$309,288</div><div class="met-sub a" id="mARD">38 open invoices</div></div>
+    <div class="met"><div class="met-lbl">Accounts Payable</div><div class="met-val" id="mAP">$76,665</div><div class="met-sub r" id="mAPD">17 bills due</div></div>
+    <div class="met"><div class="met-lbl">Net Income (MTD)</div><div class="met-val" id="mNI">$45,358</div><div class="met-sub g" id="mNID">▲ +10.8% vs prior mo.</div></div>
     <div class="met"><div class="met-lbl">Recon. Status</div><div class="met-val b" id="mRecon">3 of 4</div><div class="met-sub a" id="mReconD">1 variance flagged</div></div>
   </div>
 
@@ -101,69 +103,69 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     </div>
     <div class="card">
       <div class="ctitle">Cash Flow Summary</div>
-      <div class="summary-row"><div class="summary-lbl">Operating inflows</div><div class="summary-val g" id="cfOI">+$198,450</div></div>
-      <div class="summary-row"><div class="summary-lbl">Operating outflows</div><div class="summary-val r">-$146,310</div></div>
-      <div class="summary-row"><div class="summary-lbl">Net operating CF</div><div class="summary-val g">+$52,140</div></div>
-      <div class="summary-row"><div class="summary-lbl">Capital expenditures</div><div class="summary-val r">-$12,800</div></div>
+      <div class="summary-row"><div class="summary-lbl">Operating inflows</div><div class="summary-val g" id="cfOI">+$189,955</div></div>
+      <div class="summary-row"><div class="summary-lbl">Operating outflows</div><div class="summary-val r">-$144,597</div></div>
+      <div class="summary-row"><div class="summary-lbl">Net operating CF</div><div class="summary-val g">+$45,358</div></div>
+      <div class="summary-row"><div class="summary-lbl">Capital expenditures</div><div class="summary-val r">-$12,347</div></div>
       <div class="summary-row"><div class="summary-lbl">Financing activities</div><div class="summary-val">$0</div></div>
-      <div class="summary-row total"><div class="summary-lbl">Net cash change</div><div class="summary-val g">+$39,340</div></div>
+      <div class="summary-row total"><div class="summary-lbl">Net cash change</div><div class="summary-val g">+$33,011</div></div>
     </div>
     <div class="card">
       <div class="ctitle">Expense Breakdown</div>
       <div style="position:relative;height:120px;"><canvas id="expDonut"></canvas></div>
       <div class="donut-legend">
-        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#0F3D2E;"></div>Payroll</div><div class="dl-val">44% · $64,497</div></div>
-        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#1D9E75;"></div>Vendor Payables</div><div class="dl-val">22% · $32,228</div></div>
-        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#5DCAA5;"></div>Rent &amp; Utilities</div><div class="dl-val">14% · $20,483</div></div>
-        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#9FE1CB;"></div>Software</div><div class="dl-val">11% · $16,094</div></div>
-        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#c8ead8;"></div>Other</div><div class="dl-val">9% · $13,008</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#0F3D2E;"></div>Payroll</div><div class="dl-val">45% · $64,911</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#1D9E75;"></div>Vendor Payables</div><div class="dl-val">21% · $30,108</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#5DCAA5;"></div>Rent &amp; Utilities</div><div class="dl-val">15% · $20,986</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#9FE1CB;"></div>Software</div><div class="dl-val">10% · $15,131</div></div>
+        <div class="dl"><div class="dl-left"><div class="dl-dot" style="background:#c8ead8;"></div>Other</div><div class="dl-val">9% · $13,461</div></div>
       </div>
     </div>
   </div>
 
   <div class="row r2">
     <div class="card">
-      <div class="ctitle">Accounts Receivable Aging <span>Total: $142,880</span></div>
-      <div class="aging-row"><div class="aging-lbl">Current (0–30)</div><div class="aging-track"><div class="aging-fill" style="width:62%;background:#1D9E75;">$88,586</div></div><div class="aging-amt g">62%</div></div>
-      <div class="aging-row"><div class="aging-lbl">31–60 days</div><div class="aging-track"><div class="aging-fill" style="width:21%;background:#BA7517;">$30,005</div></div><div class="aging-amt a">21%</div></div>
-      <div class="aging-row"><div class="aging-lbl">61–90 days</div><div class="aging-track"><div class="aging-fill" style="width:11%;background:#E07B39;">$15,717</div></div><div class="aging-amt a">11%</div></div>
-      <div class="aging-row"><div class="aging-lbl">90+ days</div><div class="aging-track"><div class="aging-fill" style="width:6%;background:#C0392B;">$8,573</div></div><div class="aging-amt r">6%</div></div>
+      <div class="ctitle">Accounts Receivable Aging <span>Total: $309,288</span></div>
+      <div class="aging-row"><div class="aging-lbl">Current (0–30)</div><div class="aging-track"><div class="aging-fill" style="width:48%;background:#1D9E75;">$148,036</div></div><div class="aging-amt g">48%</div></div>
+      <div class="aging-row"><div class="aging-lbl">31–60 days</div><div class="aging-track"><div class="aging-fill" style="width:13%;background:#BA7517;">$40,856</div></div><div class="aging-amt a">13%</div></div>
+      <div class="aging-row"><div class="aging-lbl">61–90 days</div><div class="aging-track"><div class="aging-fill" style="width:22%;background:#E07B39;">$66,992</div></div><div class="aging-amt a">22%</div></div>
+      <div class="aging-row"><div class="aging-lbl">90+ days</div><div class="aging-track"><div class="aging-fill" style="width:17%;background:#C0392B;">$53,405</div></div><div class="aging-amt r">17%</div></div>
       <div style="margin-top:12px;">
         <div class="ctitle" style="margin-bottom:6px;">Top Outstanding Invoices</div>
         <table class="tbl">
           <thead><tr><th>Client</th><th>Invoice #</th><th>Amount</th><th>Due Date</th><th>Age</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>Meridian Corp</td><td>INV-2241</td><td>$24,800</td><td>Jun 15</td><td>12 days</td><td><span class="pill p-g">Current</span></td></tr>
-            <tr><td>Atlas Holdings</td><td>INV-2198</td><td>$18,350</td><td>May 28</td><td>44 days</td><td><span class="pill p-a">Overdue</span></td></tr>
-            <tr><td>Vertex Solutions</td><td>INV-2176</td><td>$12,400</td><td>May 10</td><td>62 days</td><td><span class="pill p-a">Late</span></td></tr>
-            <tr><td>Pinnacle Group</td><td>INV-2130</td><td>$8,573</td><td>Apr 2</td><td>91 days</td><td><span class="pill p-r">Critical</span></td></tr>
-            <tr><td>Crestwood LLC</td><td>INV-2255</td><td>$7,200</td><td>Jun 22</td><td>5 days</td><td><span class="pill p-g">Current</span></td></tr>
+            <tr><td>Crestwood LLC</td><td>INV-2113</td><td>$25,804</td><td>Mar 31</td><td>91 days</td><td><span class="pill p-r">Critical</span></td></tr>
+            <tr><td>Meridian Corp</td><td>INV-2112</td><td>$24,614</td><td>Apr 9</td><td>82 days</td><td><span class="pill p-a">Late</span></td></tr>
+            <tr><td>Crestwood LLC</td><td>INV-2114</td><td>$21,508</td><td>Mar 25</td><td>97 days</td><td><span class="pill p-r">Critical</span></td></tr>
+            <tr><td>Crestwood LLC</td><td>INV-2101</td><td>$19,923</td><td>Jun 18</td><td>12 days</td><td><span class="pill p-g">Current</span></td></tr>
+            <tr><td>Harborline Inc</td><td>INV-2111</td><td>$19,262</td><td>Apr 16</td><td>75 days</td><td><span class="pill p-a">Late</span></td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
     <div class="card">
-      <div class="ctitle">Accounts Payable Aging <span>Total: $67,340</span></div>
-      <div class="aging-row"><div class="aging-lbl">Current (0–30)</div><div class="aging-track"><div class="aging-fill" style="width:71%;background:#1D9E75;">$47,811</div></div><div class="aging-amt g">71%</div></div>
-      <div class="aging-row"><div class="aging-lbl">31–60 days</div><div class="aging-track"><div class="aging-fill" style="width:19%;background:#BA7517;">$12,795</div></div><div class="aging-amt a">19%</div></div>
-      <div class="aging-row"><div class="aging-lbl">61+ days</div><div class="aging-track"><div class="aging-fill" style="width:10%;background:#C0392B;">$6,734</div></div><div class="aging-amt r">10%</div></div>
+      <div class="ctitle">Accounts Payable Aging <span>Total: $76,665</span></div>
+      <div class="aging-row"><div class="aging-lbl">Current (0–30)</div><div class="aging-track"><div class="aging-fill" style="width:68%;background:#1D9E75;">$51,768</div></div><div class="aging-amt g">68%</div></div>
+      <div class="aging-row"><div class="aging-lbl">31–60 days</div><div class="aging-track"><div class="aging-fill" style="width:26%;background:#BA7517;">$20,238</div></div><div class="aging-amt a">26%</div></div>
+      <div class="aging-row"><div class="aging-lbl">61+ days</div><div class="aging-track"><div class="aging-fill" style="width:16%;background:#C0392B;">$4,659</div></div><div class="aging-amt r">6%</div></div>
       <div style="margin-top:14px;">
         <div class="ctitle" style="margin-bottom:6px;">Bank Reconciliation Status</div>
         <div class="recon-item"><div class="recon-lbl">Operating Account · Chase</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val">$284,620</div><div class="recon-status s-match">Matched</div></div></div>
         <div class="recon-item"><div class="recon-lbl">Payroll Account · Wells Fargo</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val">$48,200</div><div class="recon-status s-match">Matched</div></div></div>
         <div class="recon-item"><div class="recon-lbl">Savings · Bank of America</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val">$120,000</div><div class="recon-status s-match">Matched</div></div></div>
-        <div class="recon-item"><div class="recon-lbl">Petty Cash · Regions Bank</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val r">$2,340 ≠ $2,190</div><div class="recon-status s-diff">$150 variance</div></div></div>
+        <div class="recon-item"><div class="recon-lbl">Petty Cash · Regions Bank</div><div style="display:flex;align-items:center;gap:8px;"><div class="recon-val r">$2,190 ≠ $2,340</div><div class="recon-status s-diff">$150 variance</div></div></div>
       </div>
       <div style="margin-top:14px;">
         <div class="ctitle" style="margin-bottom:6px;">Bills Due This Week</div>
         <table class="tbl">
           <thead><tr><th>Vendor</th><th>Amount</th><th>Due</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>AWS Cloud Services</td><td>$4,280</td><td>Jun 5</td><td><span class="pill p-r">Overdue</span></td></tr>
-            <tr><td>Office Lease — Main</td><td>$8,500</td><td>Jun 7</td><td><span class="pill p-a">Due Soon</span></td></tr>
-            <tr><td>Salesforce License</td><td>$2,100</td><td>Jun 10</td><td><span class="pill p-b">Scheduled</span></td></tr>
-            <tr><td>IT Support Vendor</td><td>$3,600</td><td>Jun 12</td><td><span class="pill p-b">Scheduled</span></td></tr>
+            <tr><td>Software Suite Inc</td><td>$7,321</td><td>Jun 27</td><td><span class="pill p-r">Overdue</span></td></tr>
+            <tr><td>Office Lease — Main</td><td>$6,997</td><td>Jul 2</td><td><span class="pill p-a">Due Soon</span></td></tr>
+            <tr><td>Salesforce License</td><td>$4,130</td><td>Jul 4</td><td><span class="pill p-b">Scheduled</span></td></tr>
+            <tr><td>AWS Cloud Services</td><td>$3,115</td><td>Jul 4</td><td><span class="pill p-b">Scheduled</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -179,16 +181,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const PERIODS={
-  jun:{cash:'$284,620',ar:'$142,880',ap:'$67,340',ni:'$52,140',recon:'3 of 4',cashD:'▲ +$18,340 MTD',arD:'38 open invoices',apD:'14 bills due',niD:'▲ +11.2% vs prior mo.',reconD:'1 variance flagged',income:[148000,155000,162000,170000,182000,198450],expenses:[112000,118000,121000,128000,138000,146310],net:[36000,37000,41000,42000,44000,52140],months:['Jan','Feb','Mar','Apr','May','Jun']},
-  may:{cash:'$266,280',ar:'$128,440',ap:'$71,200',ni:'$46,920',recon:'4 of 4',cashD:'▲ +$14,620 MTD',arD:'34 open invoices',apD:'16 bills due',niD:'▲ +8.4% vs prior mo.',reconD:'All accounts matched',income:[135000,142000,148000,155000,162000,182000],expenses:[104000,109000,112000,118000,121000,138000],net:[31000,33000,36000,37000,41000,44000],months:['Dec','Jan','Feb','Mar','Apr','May']},
-  apr:{cash:'$251,660',ar:'$118,200',ap:'$63,800',ni:'$43,290',recon:'3 of 4',cashD:'▲ +$11,880 MTD',arD:'31 open invoices',apD:'12 bills due',niD:'▲ +5.9% vs prior mo.',reconD:'1 variance flagged',income:[128000,132000,135000,142000,148000,162000],expenses:[98000,102000,104000,109000,112000,121000],net:[30000,30000,31000,33000,36000,41000],months:['Nov','Dec','Jan','Feb','Mar','Apr']}
+  jun:{cash:'$455,010',ar:'$309,288',ap:'$76,665',ni:'$45,358',recon:'3 of 4',cashD:'▲ +$33,011 MTD',arD:'38 open invoices',apD:'17 bills due',niD:'▲ +10.8% vs prior mo.',reconD:'1 variance flagged',income:[144946, 145564, 161012, 162716, 170432, 189955],expenses:[113142, 113475, 116775, 125735, 129496, 144597],net:[31804, 32089, 44237, 36981, 40936, 45358],months:["Jan", "Feb", "Mar", "Apr", "May", "Jun"]},
+  may:{cash:'$421,999',ar:'$161,252',ap:'$28,581',ni:'$40,936',recon:'3 of 4',cashD:'▲ +$29,858 MTD',arD:'11 open invoices',apD:'8 bills due',niD:'▲ +10.7% vs prior mo.',reconD:'1 variance flagged',income:[128396, 144946, 145564, 161012, 162716, 170432],expenses:[97957, 113142, 113475, 116775, 125735, 129496],net:[30439, 31804, 32089, 44237, 36981, 40936],months:["Dec", "Jan", "Feb", "Mar", "Apr", "May"]},
+  apr:{cash:'$392,141',ar:'$120,397',ap:'$17,314',ni:'$36,981',recon:'3 of 4',cashD:'▲ +$26,404 MTD',arD:'7 open invoices',apD:'3 bills due',niD:'▼ -16.4% vs prior mo.',reconD:'1 variance flagged',income:[129300, 128396, 144946, 145564, 161012, 162716],expenses:[99686, 97957, 113142, 113475, 116775, 125735],net:[29614, 30439, 31804, 32089, 44237, 36981],months:["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"]}
 };
 const tc='rgba(0,0,0,0.4)',gc='rgba(0,0,0,0.05)';
 let tC,eC;
 function buildTrend(d){if(tC)tC.destroy();tC=new Chart(document.getElementById('trendChart'),{type:'bar',data:{labels:d.months,datasets:[{label:'Income',data:d.income,backgroundColor:'#0F3D2E',borderRadius:3},{label:'Expenses',data:d.expenses,backgroundColor:'#C0392B',borderRadius:3},{label:'Net Income',data:d.net,type:'line',borderColor:'#1D9E75',backgroundColor:'transparent',pointBackgroundColor:'#1D9E75',pointRadius:3,borderWidth:2,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+Math.round(c.parsed.y).toLocaleString()}}},scales:{x:{ticks:{color:tc,font:{size:9}},grid:{color:gc}},y:{ticks:{color:tc,font:{size:9},callback:v=>'$'+(v/1000)+'K'},grid:{color:gc}}}}});}
-function buildExpDonut(){if(eC)eC.destroy();eC=new Chart(document.getElementById('expDonut'),{type:'doughnut',data:{labels:['Payroll','Vendor Payables','Rent & Utilities','Software','Other'],datasets:[{data:[44,22,14,11,9],backgroundColor:['#0F3D2E','#1D9E75','#5DCAA5','#9FE1CB','#c8ead8'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+'%'}}}}});}
+function buildExpDonut(){if(eC)eC.destroy();eC=new Chart(document.getElementById('expDonut'),{type:'doughnut',data:{labels:['Payroll','Vendor Payables','Rent & Utilities','Software','Other'],datasets:[{data:[45,21,15,10,9],backgroundColor:['#0F3D2E','#1D9E75','#5DCAA5','#9FE1CB','#c8ead8'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+'%'}}}}});}
 function update(){const d=PERIODS[document.getElementById('periodSel').value];document.getElementById('mCash').textContent=d.cash;document.getElementById('mAR').textContent=d.ar;document.getElementById('mAP').textContent=d.ap;document.getElementById('mNI').textContent=d.ni;document.getElementById('mRecon').textContent=d.recon;document.getElementById('mCashD').textContent=d.cashD;document.getElementById('mARD').textContent=d.arD;document.getElementById('mAPD').textContent=d.apD;document.getElementById('mNID').textContent=d.niD;document.getElementById('mReconD').textContent=d.reconD;buildTrend(d);}
-buildTrend(PERIODS['jun']);buildExpDonut();
+update();buildExpDonut();
 </script>
 </body>
 </html>
